@@ -9,6 +9,7 @@ import browserslist from 'browserslist';
 import { prefetch } from './prefetch-plugin';
 
 export default defineConfig({
+	base: "/",
 	plugins: [
 		svelte(),
 		prefetch(),
