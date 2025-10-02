@@ -9,7 +9,7 @@
 		switch (key) {
 			case 'about-this-mac':
 				// Show hackwwp icon picture
-				window.open('/app-icons/hackwwp/hackwwp.png', '_blank');
+				window.open('/app-icons/hackwwp/192.png', '_blank');
 				break;
 			case 'app-store':
 				apps.open['appstore'] = true;
@@ -19,14 +19,10 @@
 				userService.logout();
 				break;
 			case 'about-hackwwp':
-			case 'event-info':
+			case 'eventInfo':
 			case 'schedule':
-				apps.open['event-info'] = true;
-				apps.active = 'event-info';
-				break;
-			case 'team-info':
-				apps.open['team-info'] = true;
-				apps.active = 'team-info';
+				apps.open['eventInfo'] = true;
+				apps.active = 'eventInfo';
 				break;
 			case 'team-chat':
 				apps.open['messages'] = true;

@@ -58,7 +58,47 @@ Contact Information:
 --------------------
 Email: hackwwp@gmail.com
 
-$ █`;
+$ hackwwp --team-info
+
+2025-2026 hackWWP Team
+======================
+
+Executive Board
+---------------
+Christopher Ren
+Syam Paladugu
+
+Marketing & Logistics
+---------------------
+Director: Syam Paladugu
+Christopher Ren, Contest Logistics
+Vijay Murali, Marketing
+Aarav Dwivedi, Marketing
+
+Contest Operations
+------------------
+Director: Adhithya Jayamohan
+Director: Abhilash Kalyan
+
+Panel of Judges
+---------------
+Christopher Ren, Lead Judge
+Syam Paladugu, Asst. Judge
+Vijay Murali, Asst. Judge
+
+Technology
+----------
+Director, Lead Backend & Grading Server Developer: Gabriel Jimenez
+Christopher Ren, Lead Frontend Developer & Grading Server Developer
+Aarav Dwivedi, Frontend Developer
+Syam Paladugu, Frontend Developer
+Vijay Murali, Backend Developer
+Aarav Dwivedi, Backend Developer
+
+Outreach
+--------
+Director: Vijay Murali`;
+
 
 	onMount(() => {
 		isTyping = true;
@@ -80,14 +120,9 @@ $ █`;
 
 <div class="terminal-container">
 	<div class="terminal-header">
-		<div class="terminal-controls">
-			<div class="control-btn red"></div>
-			<div class="control-btn yellow"></div>
-			<div class="control-btn green"></div>
-		</div>
 		<div class="terminal-title">
-			<img src="/hackWWP.png" alt="hackWWP Logo" class="terminal-logo" />
-			hackwwp-terminal — Event Information
+				<img src="app-icons/hackwwp/192.png" alt="hackWWP Logo" class="terminal-logo" />
+				hackwwp-terminal — Event Information
 		</div>
 	</div>
 
@@ -127,18 +162,6 @@ $ █`;
 		border-radius: 50%;
 	}
 
-	.control-btn.red {
-		background: #ff5f56;
-	}
-
-	.control-btn.yellow {
-		background: #ffbd2e;
-	}
-
-	.control-btn.green {
-		background: #27ca3f;
-	}
-
 	.terminal-title {
 		color: #a0a0a0;
 		font-size: 0.9rem;
@@ -153,6 +176,8 @@ $ █`;
 		height: 18px;
 		border-radius: 3px;
 		object-fit: contain;
+		margin-top: 2px;
+		margin-left: 67px;
 	}
 
 	.terminal-body {

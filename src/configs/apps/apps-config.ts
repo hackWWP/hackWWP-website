@@ -59,16 +59,10 @@ const notes = create_app_config({
 
 const eventInfo = create_app_config({
 	title: 'Event Info',
+	icon: '/app-icons/eventInfo/256.png',
 	resizable: true,
 	height: 600,
-	width: 800,
-});
-
-const teamInfo = create_app_config({
-	title: 'Team Info',
-	resizable: true,
-	height: 600,
-	width: 800,
+	width: 600,
 });
 
 export const apps_config = {
@@ -79,6 +73,5 @@ export const apps_config = {
 	appstore,
 	photos,
 	notes,
-	'event-info': eventInfo,
-	'team-info': teamInfo,
+	eventInfo,
 };

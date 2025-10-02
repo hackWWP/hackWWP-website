@@ -60,9 +60,6 @@
 		onmouseleave={() => (dock_mouse_x = null)}
 	>
 		{#each Object.entries(apps_config) as [appID, config]}
-			{#if config.dock_breaks_before}
-				<div class="divider" aria-hidden="true"></div>
-			{/if}
 
 			<DockItem mouse_x={dock_mouse_x} app_id={appID} needs_update={system_needs_update.value} />
 		{/each}
@@ -145,12 +142,4 @@
 		}
 	}
 
-	.divider {
-		height: 100%;
-		width: 0.2px;
-
-		background-color: hsla(var(--system-color-dark-hsl), 0.3);
-
-		margin: 0 4px;
-	}
 </style>

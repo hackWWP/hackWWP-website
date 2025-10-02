@@ -3,6 +3,9 @@ export type AppConfig = {
 
 	resizable?: boolean;
 	expandable?: boolean;
+
+	/** Optional override for the app icon (URL from web root) */
+	icon?: string;
 	height?: string | number;
 	width?: string | number;
 

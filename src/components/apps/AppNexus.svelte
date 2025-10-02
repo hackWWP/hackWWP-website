@@ -34,13 +34,9 @@
 	{#await import('./Notes/Notes.svelte') then { default: Notes }}
 		<Notes />
 	{/await}
-{:else if app_id === 'event-info'}
+{:else if app_id === 'eventInfo'}
 	{#await import('./EventInfo/EventInfoTerminal.svelte') then { default: EventInfo }}
 		<EventInfo />
-	{/await}
-{:else if app_id === 'team-info'}
-	{#await import('./TeamInfo/TeamInfoTerminal.svelte') then { default: TeamInfo }}
-		<TeamInfo />
 	{/await}
 {:else}
 	{#await import('./AppStore/AppStorePlaceholder.svelte') then { default: AppStorePlaceholder }}

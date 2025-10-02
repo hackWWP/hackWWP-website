@@ -17,7 +17,7 @@
 	});
 </script>
 
-{#if !(hidden_splash_screen || import.meta.env.DEV)}
+{#if !(hidden_splash_screen)}
 	<div out:fade_out={{ duration: 500 }} class="splash-screen" use:elevation={'bootup-screen'}>
 		<AppleIcon />
 
@@ -27,7 +27,6 @@
 			aria-valuenow={100 - $progress_val}
 			aria-valuemin={0}
 			aria-valuemax={100}
-			aria-valuetext="Loading up macOS Web"
 		>
 			<div class="indicator" style:translate="-{$progress_val}% 0"></div>
 		</div>
@@ -35,9 +34,7 @@
 {/if}
 
 <!-- iframe => firefox support: will always make sound available on start or F5 -->
-{#if import.meta.env.PROD}
-	<iframe id="audio" src="/sounds/mac-startup-sound.mp3" allow="autoplay" title="hello"></iframe>
-{/if}
+<iframe id="audio" src="/sounds/mac-startup-sound.mp3" allow="autoplay" title="hello"></iframe>
 
 <style>
 	.splash-screen {

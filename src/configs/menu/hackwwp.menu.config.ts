@@ -7,11 +7,8 @@ export const hackwwp_menu_config = create_menu_config({
 			'about-hackwwp': {
 				title: 'About hackWWP',
 			},
-			'event-info': {
+			'eventInfo': {
 				title: 'Event Info',
-			},
-			'team-info': {
-				title: 'Team Info',
 			},
 			'schedule': {
 				title: 'Schedule',

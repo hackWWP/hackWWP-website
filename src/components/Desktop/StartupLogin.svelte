@@ -1,5 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { quintInOut } from 'svelte/easing';
+	import { tweened } from 'svelte/motion';
+	import AppleIcon from '~icons/mdi/apple';
+	import { elevation } from '🍎/actions';
+	import { fade_out } from '🍎/helpers/fade.ts';
+	import { sleep } from '🍎/helpers/sleep';
 	import { userService } from '../../services/userService';
 	
 	export let onComplete: (success: boolean) => void;
@@ -14,31 +20,20 @@
 	let errorMessage = '';
 	let isLoading = false;
 	let isBootSequence = true;
-	let bootProgress = 0;
+	let progress_val = tweened(100, { duration: 3000, easing: quintInOut });
 
-	onMount(() => {
+	onMount(async () => {
 		// Check if user is already logged in
 		if (userService.isLoggedIn()) {
 			onComplete(true);
 			return;
 		}
 
-		// Start boot sequence animation
-		startBootSequence();
+		// Start Mac-style boot sequence animation
+		$progress_val = 0;
+		await sleep(3000);
+		isBootSequence = false;
 	});
-
-	function startBootSequence() {
-		const interval = setInterval(() => {
-			bootProgress += Math.random() * 15 + 5;
-			if (bootProgress >= 100) {
-				bootProgress = 100;
-				clearInterval(interval);
-				setTimeout(() => {
-					isBootSequence = false;
-				}, 500);
-			}
-		}, 200);
-	}
 
 	async function handleLogin() {
 		if (!email || !password) {
@@ -145,19 +140,18 @@
 {#if showLoginScreen}
 	{#if isBootSequence}
 		<!-- Mac Boot Sequence -->
-		<div class="boot-screen">
-			<div class="boot-content">
-				<div class="apple-logo">
-					<svg width="80" height="80" viewBox="0 0 256 315" fill="none">
-						<path d="M213.803 167.03c-.442-47.58 39.002-70.286 40.81-71.427-22.236-32.439-56.905-36.899-69.226-37.378-29.566-2.956-57.676 17.355-72.718 17.355-15.042 0-38.313-16.933-62.925-16.464-32.36.469-62.188 18.766-78.847 47.693-33.645 58.362-8.611 144.849 24.197 192.389 16.043 23.288 35.19 49.446 60.337 48.506 24.708-.939 34.05-15.99 63.947-15.99 29.896 0 38.768 15.99 63.417 15.52 26.118-.47 42.634-23.986 58.676-47.274 18.506-26.586 26.118-52.744 26.587-54.056-.47-.469-51.081-19.704-51.55-78.24zM174.24 50.199c13.336-16.464 22.322-39.058 19.835-61.652-19.366.938-42.635 12.815-56.44 28.81-12.346 14.051-23.288 36.645-20.331 58.362 21.853 1.877 44.447-10.938 57.012-25.52h-.076z" fill="white"/>
-					</svg>
-				</div>
-				
-				<div class="loading-container">
-					<div class="loading-bar">
-						<div class="loading-progress" style="width: {bootProgress}%"></div>
-					</div>
-				</div>
+		<div out:fade_out={{ duration: 500 }} class="splash-screen" use:elevation={'bootup-screen'}>
+			<AppleIcon />
+
+			<div
+				class="progress"
+				role="progressbar"
+				aria-valuenow={100 - $progress_val}
+				aria-valuemin={0}
+				aria-valuemax={100}
+				aria-valuetext="Loading up macOS Web"
+			>
+				<div class="indicator" style:translate="-{$progress_val}% 0"></div>
 			</div>
 		</div>
 	{:else}
@@ -167,12 +161,7 @@
 				{#if loginMode === 'select'}
 					<div class="login-content">
 						<div class="welcome-section">
-							<div class="mac-logo">
-								<svg width="60" height="60" viewBox="0 0 256 315" fill="none">
-									<path d="M213.803 167.03c-.442-47.58 39.002-70.286 40.81-71.427-22.236-32.439-56.905-36.899-69.226-37.378-29.566-2.956-57.676 17.355-72.718 17.355-15.042 0-38.313-16.933-62.925-16.464-32.36.469-62.188 18.766-78.847 47.693-33.645 58.362-8.611 144.849 24.197 192.389 16.043 23.288 35.19 49.446 60.337 48.506 24.708-.939 34.05-15.99 63.947-15.99 29.896 0 38.768 15.99 63.417 15.52 26.118-.47 42.634-23.986 58.676-47.274 18.506-26.586 26.118-52.744 26.587-54.056-.47-.469-51.081-19.704-51.55-78.24zM174.24 50.199c13.336-16.464 22.322-39.058 19.835-61.652-19.366.938-42.635 12.815-56.44 28.81-12.346 14.051-23.288 36.645-20.331 58.362 21.853 1.877 44.447-10.938 57.012-25.52h-.076z" fill="white"/>
-								</svg>
-							</div>
-							<h1>macOS</h1>
+							<h1>hackWWP</h1>
 						</div>
 
 						<div class="login-options">
@@ -332,50 +321,57 @@
 	{/if}
 {/if}
 
+<!-- iframe => firefox support: will always make sound available on start or F5 -->
+<iframe id="audio" src="/sounds/mac-startup-sound.mp3" allow="autoplay" title="Mac Startup Sound"></iframe>
+
 <style>
-	/* Boot Sequence Styles */
-	.boot-screen {
+	/* Mac Boot Sequence Styles */
+	.splash-screen {
 		position: fixed;
 		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background: #000000;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		z-index: 9999;
-	}
+		bottom: 0;
 
-	.boot-content {
+		height: 100vh;
+		width: 100vw;
+
+		cursor: none;
+
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		align-items: center;
-		gap: 60px;
+		gap: 2rem;
+
+		animation-fill-mode: forwards;
+
+		background-color: #000;
+
+		:global(svg) {
+			font-size: 100px;
+			color: white;
+		}
 	}
 
-	.apple-logo {
-		filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-	}
+	.progress {
+		border-radius: 50px;
 
-	.loading-container {
-		width: 300px;
-	}
-
-	.loading-bar {
-		width: 100%;
 		height: 4px;
-		background: rgba(255, 255, 255, 0.2);
-		border-radius: 2px;
-		overflow: hidden;
+		width: 150px;
+
+		overflow-x: hidden;
+
+		background-color: var(--system-color-grey-800);
 	}
 
-	.loading-progress {
+	.indicator {
+		background-color: var(--system-color-grey-100);
+
+		border-radius: inherit;
+
+		width: 100%;
 		height: 100%;
-		background: #ffffff;
-		border-radius: 2px;
-		transition: width 0.3s ease;
-		box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+
+		transform: translateX(-0%);
 	}
 
 	/* Login Screen Styles */
@@ -389,7 +385,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 		z-index: 9999;
 	}
 
@@ -414,6 +410,8 @@
 		margin-bottom: 15px;
 		display: flex;
 		justify-content: center;
+		align-items: center;
+		height: 70px;
 		filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
 	}
 
@@ -423,6 +421,7 @@
 		font-weight: 300;
 		margin: 0;
 		letter-spacing: -0.02em;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.login-options {
@@ -445,6 +444,7 @@
 		color: #ffffff;
 		text-align: center;
 		width: 100%;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.login-option:hover {
@@ -467,6 +467,7 @@
 		font-size: 1rem;
 		font-weight: 500;
 		margin: 0;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	/* Form Styles */
@@ -480,6 +481,7 @@
 		font-size: 1.8rem;
 		font-weight: 400;
 		color: #ffffff;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.guest-description {
@@ -488,6 +490,7 @@
 		margin: 0 0 30px 0;
 		font-size: 0.95rem;
 		line-height: 1.4;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.form-group {
@@ -504,6 +507,7 @@
 		font-size: 1rem;
 		transition: all 0.3s ease;
 		box-sizing: border-box;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.form-group input::placeholder {
@@ -531,6 +535,7 @@
 		font-size: 0.9rem;
 		margin-bottom: 20px;
 		text-align: center;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.form-actions {
@@ -549,6 +554,7 @@
 		font-size: 1rem;
 		cursor: pointer;
 		transition: all 0.3s ease;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.btn-back:hover:not(:disabled) {
@@ -567,6 +573,7 @@
 		font-weight: 500;
 		cursor: pointer;
 		transition: all 0.3s ease;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 	}
 
 	.btn-primary:hover:not(:disabled) {
@@ -577,5 +584,11 @@
 	.btn-back:disabled, .btn-primary:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
+	}
+
+	#audio {
+		position: absolute;
+		z-index: -9999;
+		display: none;
 	}
 </style>

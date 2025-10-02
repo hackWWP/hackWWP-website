@@ -135,7 +135,7 @@
 		<div class="notes-sidebar">
 			<div class="sidebar-header">
 				<div class="notes-title">
-					<img src="/hackWWP.png" alt="hackWWP Logo" class="notes-logo" />
+					<img src="/app-icons/hackwwp/192.png" alt="hackWWP Logo" class="notes-logo" />
 					<h2>Notes</h2>
 				</div>
 				<div class="header-actions">
