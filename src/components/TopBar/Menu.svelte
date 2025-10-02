@@ -1,12 +1,47 @@
 <script lang="ts">
+	import { apps } from '🍎/state/apps.svelte.ts';
+	import { userService } from '🍎/services/userService.ts';
 	import { preferences } from '🍎/state/preferences.svelte.ts';
 
 	const { menu }: { menu: any } = $props();
+
+	function handleMenuAction(key: string) {
+		switch (key) {
+			case 'about-this-mac':
+				// Show hackwwp icon picture
+				window.open('/app-icons/hackwwp/hackwwp.png', '_blank');
+				break;
+			case 'app-store':
+				apps.open['appstore'] = true;
+				apps.active = 'appstore';
+				break;
+			case 'logout':
+				userService.logout();
+				break;
+			case 'about-hackwwp':
+			case 'event-info':
+			case 'schedule':
+				apps.open['event-info'] = true;
+				apps.active = 'event-info';
+				break;
+			case 'team-info':
+				apps.open['team-info'] = true;
+				apps.active = 'team-info';
+				break;
+			case 'team-chat':
+				apps.open['messages'] = true;
+				apps.active = 'messages';
+				break;
+			case 'code-editor':
+				// Could open a code editor app if we had one
+				break;
+		}
+	}
 </script>
 
 <section class="container" class:dark={preferences.theme.scheme === 'dark'}>
-	{#each Object.entries(menu) as Array<[any, any]> as [_, val]}
-		<button class="menu-item" disabled={val.disabled}>{val.title}</button>
+	{#each Object.entries(menu) as Array<[any, any]> as [key, val]}
+		<button class="menu-item" disabled={val.disabled} onclick={() => handleMenuAction(key)}>{val.title}</button>
 		{#if val.breakAfter}
 			<div class="divider"></div>
 		{/if}

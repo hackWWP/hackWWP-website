@@ -116,7 +116,7 @@
 		display: flex;
 		justify-content: center;
 
-		padding: 0.9rem 1rem;
+		padding: 0.9rem 1rem 0.9rem 4.5rem;
 
 		width: 100%;
 

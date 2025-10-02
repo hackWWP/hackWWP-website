@@ -25,79 +25,60 @@ const calendar = create_app_config({
 	resizable: true,
 });
 
-const vscode = create_app_config({
-	title: 'VSCode',
-	resizable: true,
+// VSCode app removed
 
+const messages = create_app_config({
+	title: 'Messages',
+	resizable: true,
 	height: 600,
 	width: 800,
-});
-
-const finder = create_app_config({
-	title: 'Finder',
-	resizable: true,
-
-	// dockBreaksBefore: true,
-	should_open_window: false,
-});
-
-const safari = create_app_config({
-	title: 'Safari',
-	resizable: true,
-});
-
-const systemPreferences = create_app_config({
-	title: 'System Preferences',
-	resizable: true,
-});
-
-const purusTwitter = create_app_config({
-	title: `About the Developer`,
-	resizable: true,
-
-	dock_breaks_before: true,
-
-	height: 600,
-	width: 800,
-});
-
-const viewSource = create_app_config({
-	title: `View Source`,
-	resizable: true,
-
-	should_open_window: false,
-	external_action: () => window.open('https://github.com/puruvj/macos-web', '_blank'),
-});
-
-const vercel = create_app_config({
-	title: `Powered by Vercel`,
-	resizable: true,
-
-	should_open_window: false,
-	external_action: () =>
-		window.open('https://vercel.com/?utm_source=purus-projects&utm_campaign=oss', '_blank'),
-
-	dock_breaks_before: true,
 });
 
 const appstore = create_app_config({
 	title: 'App Store',
 	resizable: true,
+	height: 600,
+	width: 800,
+});
+
+// Music app removed
+
+const photos = create_app_config({
+	title: 'Photos',
+	resizable: true,
+	height: 600,
+	width: 800,
+});
+
+const notes = create_app_config({
+	title: 'Notes',
+	resizable: true,
+	height: 600,
+	width: 600,
+});
+
+const eventInfo = create_app_config({
+	title: 'Event Info',
+	resizable: true,
+	height: 600,
+	width: 800,
+});
+
+const teamInfo = create_app_config({
+	title: 'Team Info',
+	resizable: true,
+	height: 600,
+	width: 800,
 });
 
 export const apps_config = {
-	finder,
 	wallpapers,
 	calculator,
 	calendar,
-	vscode,
+	messages,
 	appstore,
-	// safari,
-
-	// 'system-preferences': systemPreferences,
-
-	'purus-twitter': purusTwitter,
-	'view-source': viewSource,
-
-	vercel,
+	photos,
+	notes,
+	'event-info': eventInfo,
+	'team-info': teamInfo,
 };

@@ -14,10 +14,6 @@
 	{#await import('./Calendar/Calendar.svelte') then { default: Calendar }}
 		<Calendar />
 	{/await}
-{:else if app_id === 'vscode'}
-	{#await import('./VSCode/VSCode.svelte') then { default: VSCode }}
-		<VSCode {is_being_dragged} />
-	{/await}
 {:else if app_id === 'calculator'}
 	{#await import('./Calculator/Calculator.svelte') then { default: Calculator }}
 		<Calculator />
@@ -26,12 +22,28 @@
 	{#await import('./WallpaperApp/WallpaperSelectorApp.svelte') then { default: WallpaperSelector }}
 		<WallpaperSelector />
 	{/await}
-{:else if app_id === 'purus-twitter'}
-	{#await import('./PurusProfile/PurusProfile.svelte') then { default: PurusProfile }}
-		<PurusProfile />
+{:else if app_id === 'messages'}
+	{#await import('./Messages/MessagesNew.svelte') then { default: Messages }}
+		<Messages />
+	{/await}
+{:else if app_id === 'photos'}
+	{#await import('./Photos/Photos.svelte') then { default: Photos }}
+		<Photos />
+	{/await}
+{:else if app_id === 'notes'}
+	{#await import('./Notes/Notes.svelte') then { default: Notes }}
+		<Notes />
+	{/await}
+{:else if app_id === 'event-info'}
+	{#await import('./EventInfo/EventInfoTerminal.svelte') then { default: EventInfo }}
+		<EventInfo />
+	{/await}
+{:else if app_id === 'team-info'}
+	{#await import('./TeamInfo/TeamInfoTerminal.svelte') then { default: TeamInfo }}
+		<TeamInfo />
 	{/await}
 {:else}
-	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}
-		<AppStore {app_id} />
+	{#await import('./AppStore/AppStorePlaceholder.svelte') then { default: AppStorePlaceholder }}
+		<AppStorePlaceholder />
 	{/await}
 {/if}
