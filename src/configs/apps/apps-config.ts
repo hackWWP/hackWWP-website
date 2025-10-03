@@ -65,6 +65,14 @@ const eventInfo = create_app_config({
 	width: 600,
 });
 
+const sponsors = create_app_config({
+	title: 'Sponsors',
+	icon: '/app-icons/sponsors/256.png',
+	resizable: true,
+	height: 600,
+	width: 600,
+});
+
 export const apps_config = {
 	wallpapers,
 	calculator,
@@ -74,4 +82,5 @@ export const apps_config = {
 	photos,
 	notes,
 	eventInfo,
+	sponsors,
 };

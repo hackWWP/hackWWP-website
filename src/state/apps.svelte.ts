@@ -11,8 +11,8 @@ export const apps = $state({
 		appstore: false,
 		photos: false,
 		notes: false,
-		'event-info': false,
-		'team-info': false,
+		eventInfo: false,
+		sponsors: false,
 	} as Record<AppID, boolean>,
 
 	active: 'wallpapers' satisfies AppID,
@@ -31,8 +31,8 @@ export const apps = $state({
 		appstore: 0,
 		photos: 0,
 		notes: 0,
-		'event-info': 0,
-		'team-info': 0,
+		eventInfo: 0,
+		sponsors: 0,
 	} as Record<AppID, number>,
 
 	is_being_dragged: false as boolean,
@@ -45,7 +45,7 @@ export const apps = $state({
 		appstore: false,
 		photos: false,
 		notes: false,
-		'event-info': false,
-		'team-info': false,
+		eventInfo: false,
+		sponsors: false,
 	} as Record<AppID, boolean>,
 });

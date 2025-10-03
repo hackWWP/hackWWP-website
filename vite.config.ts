@@ -24,10 +24,9 @@ export default defineConfig({
 				'**/*.mp3',
 			],
 			manifest: {
-				name: 'Mac OS Monterey Svelte Web',
-				short_name: 'macOS Svelte',
+				name: 'hackWWP\'s macBook',
+				short_name: 'hackWWPmacBook',
 				theme_color: '#ffffff',
-				description: 'Mac OS Monterey Web written in Svelte',
 				icons: [
 					{
 						src: 'app-icons/finder/128.png',

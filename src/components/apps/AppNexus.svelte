@@ -38,6 +38,10 @@
 	{#await import('./EventInfo/EventInfoTerminal.svelte') then { default: EventInfo }}
 		<EventInfo />
 	{/await}
+{:else if app_id === 'sponsors'}
+	{#await import('./Sponsors/SponsorsTerminal.svelte') then { default: Sponsors }}
+		<Sponsors />
+	{/await}
 {:else}
 	{#await import('./AppStore/AppStorePlaceholder.svelte') then { default: AppStorePlaceholder }}
 		<AppStorePlaceholder />
